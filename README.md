@@ -1,64 +1,64 @@
-# Airbnb Swift Style Guide
+# Airbnb Swift 风格指南
 
-## Goals
+## 目标
 
-Following this style guide should:
+遵循本风格指南应该：
 
-* Make it easier to read and begin understanding unfamiliar code.
-* Make code easier to maintain.
-* Reduce simple programmer errors.
-* Reduce cognitive load while coding.
-* Keep discussions on diffs focused on the code's logic rather than its style.
+* 使阅读和理解不熟悉的代码变得更容易。
+* 使代码更易于维护。
+* 减少简单的程序员错误。
+* 减少编码时的认知负担。
+* 保持对差异的讨论集中在代码的逻辑而不是它的风格上。
 
-Note that brevity is not a primary goal. Code should be made more concise only if other good code qualities (such as readability, simplicity, and clarity) remain equal or are improved.
+请注意，简洁不是主要目标。只有在其他良好的代码质量（例如可读性、简单性和清晰性）保持不变或有所改进时，代码才应该更加简洁。
 
-## Guiding Tenets
+## 指导原则
 
-* This guide is in addition to the official [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/). These rules should not contradict that document.
-* These rules should not fight Xcode's <kbd>^</kbd> + <kbd>I</kbd> indentation behavior.
-* We strive to make every rule lintable:
-  * If a rule changes the format of the code, it needs to be able to be reformatted automatically (either using [SwiftLint](https://github.com/realm/SwiftLint) autocorrect or [SwiftFormat](https://github.com/nicklockwood/SwiftFormat)).
-  * For rules that don't directly change the format of the code, we should have a lint rule that throws a warning.
-  * Exceptions to these rules should be rare and heavily justified.
+* 本指南是官方 [Swift API 设计指南](https://swift.org/documentation/api-design-guidelines/)补充。这些规则不应与该文件相矛盾。
+* 这些规则不应该对抗 Xcode <kbd>^</kbd> + <kbd>I</kbd> 的缩进行为。
+* 我们努力使每条规则都可以检查：
+  * 如果规则更改了代码的格式，则需要能够自动重新格式化（使用[SwiftLint](https://github.com/realm/SwiftLint)自动更正或[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)）。
+  * 对于不直接改变代码格式的规则，我们应该有一个抛出警告的 lint 规则。
+  * 这些规则的例外应该是罕见的，并且是有充分理由的。
 
-## Table of Contents
+## 目录
 
-1. [Xcode Formatting](#xcode-formatting)
-1. [Naming](#naming)
-1. [Style](#style)
-    1. [Functions](#functions)
-    1. [Closures](#closures)
-    1. [Operators](#operators)
-1. [Patterns](#patterns)
+1. [Xcode 格式化](#xcode-格式化)
+1. [命名](#命名)
+1. [风格](#风格)
+    1. [方法](#方法)
+    1. [闭包](#闭包)
+    1. [运算符](#运算符)
+1. [模式](#模式)
 1. [File Organization](#file-organization)
 1. [Objective-C Interoperability](#objective-c-interoperability)
 1. [Contributors](#contributors)
 1. [Amendments](#amendments)
 
-## Xcode Formatting
+## Xcode 格式化
 
-_You can enable the following settings in Xcode by running [this script](resources/xcode_settings.bash), e.g. as part of a "Run Script" build phase._
+_您可以通过运行此[脚本](resources/xcode_settings.bash)在 Xcode 中启用以下设置，例如作为“Run Script”构建阶段的一部分。_
 
-* <a id='column-width'></a>(<a href='#column-width'>link</a>) **Each line should have a maximum column width of 100 characters.** [![SwiftFormat: wrap](https://img.shields.io/badge/SwiftFormat-wrap-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrap)
+* <a id='column-width'></a>(<a href='#column-width'>link</a>) **每行的最大列宽应为 100 个字符。** [![SwiftFormat: wrap](https://img.shields.io/badge/SwiftFormat-wrap-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrap)
 
   <details>
 
-  #### Why?
-  Due to larger screen sizes, we have opted to choose a page guide greater than 80. 
+  #### 为什么？
+  由于屏幕尺寸较大，我们选择了大于 80 的页面指南。
   
-  We currently only "strictly enforce" (lint / auto-format) a maximum column width of 130 characters to limit the cases where manual clean up is required for reformatted lines that fall slightly above the threshold.
+  我们目前仅“严格执行”（lint / auto-format）最大列宽为 130 个字符，以限制需要手动清理略高于阈值的重新格式化行的情况。
 
   </details>
 
-* <a id='spaces-over-tabs'></a>(<a href='#spaces-over-tabs'>link</a>) **Use 2 spaces to indent lines.** [![SwiftFormat: indent](https://img.shields.io/badge/SwiftFormat-indent-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#indent)
+* <a id='spaces-over-tabs'></a>(<a href='#spaces-over-tabs'>link</a>) **使用 2 个空格来缩进行。** [![SwiftFormat: indent](https://img.shields.io/badge/SwiftFormat-indent-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#indent)
 
-* <a id='trailing-whitespace'></a>(<a href='#trailing-whitespace'>link</a>) **Trim trailing whitespace in all lines.** [![SwiftFormat: trailingSpace](https://img.shields.io/badge/SwiftFormat-trailingSpace-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#trailingSpace)
+* <a id='trailing-whitespace'></a>(<a href='#trailing-whitespace'>link</a>) **修剪所有行中的尾随空格。** [![SwiftFormat: trailingSpace](https://img.shields.io/badge/SwiftFormat-trailingSpace-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#trailingSpace)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 回到顶部](#目录)**
 
-## Naming
+## 命名
 
-* <a id='use-camel-case'></a>(<a href='#use-camel-case'>link</a>) **Use PascalCase for type and protocol names, and lowerCamelCase for everything else.** [![SwiftLint: type_name](https://img.shields.io/badge/SwiftLint-type__name-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#type-name)
+* <a id='use-camel-case'></a>(<a href='#use-camel-case'>link</a>) **使用 PascalCase 命名类型和协议名称, 并使用 lowerCamelCase 命名其它内容。** [![SwiftLint: type_name](https://img.shields.io/badge/SwiftLint-type__name-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#type-name)
 
   <details>
 
